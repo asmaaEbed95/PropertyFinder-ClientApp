@@ -1,6 +1,7 @@
 <div class="card shadow-lg">
   <div class="card-img-wrapper">
-    <img class="card-img-top" src="assets/Images/home.png" />
+    <img *ngIf="property.Image" class="card-img-top" src="assets/Images/{{property.Image}}.jpg" />
+    <img *ngIf="!property.Image" class="card-img-top" src="assets/Images/home.jpg" />
     <ul class="list-inline text-center member-icons animate">
       <li class="list-inline-item">
         <button class="btn btn-primary" routerLink="/property-detail/{{property.Id}}"><i class="far fa-edit"></i></button>
@@ -12,7 +13,7 @@
   </div>
   <div class="card-body">
     <h1>{{property.Name}}</h1>
-    <h2>{{property.Type}}</h2>
-    <h3>{{property.Price}}</h3>
+    <h3>{{property.Type}}</h3>
+    <h4>{{property.Price}}</h4>
   </div>
 </div>
