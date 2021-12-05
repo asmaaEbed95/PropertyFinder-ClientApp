@@ -12,7 +12,15 @@ export class HousingService {
 
   constructor(private http:HttpClient) { }
 
-  getAllProperties(SellRent: number): Observable<IPropertyBase[]> {
+  getProperty(id: number) {
+    return this.getAllProperties().pipe(
+      map(propertiesArray => {
+        console.log(propertiesArray);
+        return propertiesArray.find(p => p.Id === id);
+      }))
+  }
+
+  getAllProperties(SellRent?: number): Observable<IPropertyBase[]> {
     //we used pipe to convert the response to array<any> instead of the linear way of the subscripe
     return this.http.get('data/properties.json').pipe(
       map((data: any) => {
@@ -21,9 +29,15 @@ export class HousingService {
 
         if (localProperties) {
           for (const id in localProperties) {
-            if(data.hasOwnProperty(id) && localProperties[id].SellRent === SellRent) {
-              propertiesArray.push(localProperties[id]);
+
+            if(SellRent) {
+              if(data.hasOwnProperty(id) && localProperties[id].SellRent === SellRent) {
+                propertiesArray.push(localProperties[id]);
+              }
+            } else {
+              propertiesArray.push(data[id])
             }
+
           }
         }
 
